@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SimpleML.GeneticAlgorithm
 {
-    public class Fenotype
+    public class Chromosome
     {
     }
 }
