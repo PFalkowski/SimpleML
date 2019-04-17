@@ -10,53 +10,33 @@ namespace SimpleML.GeneticAlgorithm
     {
         protected readonly object _syncRoot = new object();
 
+        public Random Rng { get; protected set; }
+        public List<Genotype> GenePool { get; protected set; }
+        public IFitnessFunction FitnessFunction { get; protected set; }
+        public ISelectionAlgorithm FittestSelectionAlgorithm { get; protected set; }
+        public GeneticAlgorithmSettings Settings { get; protected set; }
+
         public Population(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
             Rng = settings.Rng;
+            Initialize();
+            Randomize();
         }
-
-        public Random Rng { get; protected set; }
-        public List<Genotype> GenePool { get; protected set; }
-        public SortedList<double, Genotype> Organisms { get; protected set; }
-        public IFitnessFunction FitnessFunction { get; protected set; }
-        public ISelectionAlgorithm FittestSelectionAlgorithm { get; protected set; }
-        public ISelectionAlgorithm ParentSelectionAlgorithm { get; protected set; }
-
-
-        public GeneticAlgorithmSettings Settings { get; protected set; }
-        public void Initialize(GeneticAlgorithmSettings settings)
+        public void Initialize()
         {
-            Organisms = new SortedList<double, Genotype>(Settings.PopulationSize);
-            RandomizePopulation();
-        }
-        public void RandomizePopulation()
-        {
-            Organisms = new SortedList<double, Genotype>(Settings.PopulationSize);
-            Parallel.For(0, Settings.PopulationSize, i =>
+            GenePool = new List<Genotype>(Settings.PopulationSize);
+            for (int i = 0; i < Settings.PopulationSize; ++i)
             {
-                var genotype = new Genotype();
-                var fitness = FitnessFunction.Evaluate(genotype);
-                genotype.Fitness = fitness;
-                lock (_syncRoot)
-                { Organisms.Add(fitness, genotype); }
-            });
+                GenePool[i] = new Genotype(Settings);
+            }
         }
-        public void NaturalSelection()
+        public void Randomize()
         {
-
-        }
-        public List<Genotype> GetFittest()
-        {
-            return FittestSelectionAlgorithm.Select(Organisms);
-        }
-        public List<Genotype> SelectParents()
-        {
-            return ParentSelectionAlgorithm.Select(Organisms);
-        }
-        public void Breed()
-        {
-
+            foreach (var gene in GenePool)
+            {
+                gene.Randomize();
+            }
         }
         public void Evaluate()
         {
@@ -64,6 +44,27 @@ namespace SimpleML.GeneticAlgorithm
             {
                 genotype.Fitness = FitnessFunction.Evaluate(genotype);
             });
+        }
+        public void ApplySelection()
+        {
+            GenePool = FittestSelectionAlgorithm.Select(GenePool);
+        }
+        public void Breed()
+        {
+            var parents = GenePool;
+            GenePool = new List<Genotype>(Settings.PopulationSize);
+            while (GenePool.Count < Settings.PopulationSize)
+            {
+                var parentA = parents[Rng.Next(0, Settings.PopulationSize)];
+                Genotype parentB;
+                do
+                {
+                    parentB = parents[Rng.Next(0, Settings.PopulationSize)];
+                } while (parentA == parentB);
+                var child = parentA.CrossoverWith(parentB);
+                child.Mutate();
+                GenePool.Add(child);
+            }
         }
     }
 }

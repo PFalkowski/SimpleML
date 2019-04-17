@@ -2,6 +2,6 @@
 {
     public interface IStopFunction
     {
-        bool ShouldContinue(Population thePopulation);
+        bool ShouldContinue(RunMetadata learningMetadata);
     }
 }

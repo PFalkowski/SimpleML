@@ -4,6 +4,6 @@ namespace SimpleML.GeneticAlgorithm
 {
     public interface ISelectionAlgorithm
     {
-        List<Genotype> Select(SortedList<double, Genotype> organisms);
+        List<Genotype> Select(IList<Genotype> organisms);
     }
 }

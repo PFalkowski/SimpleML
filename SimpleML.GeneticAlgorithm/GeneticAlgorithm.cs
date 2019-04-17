@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SimpleML.GeneticAlgorithm
@@ -9,21 +10,26 @@ namespace SimpleML.GeneticAlgorithm
         public Population ThePopulation { get; protected set; }
         public GeneticAlgorithmSettings Settings { get; protected set; }
         public IStopFunction StopFunction { get; protected set; }
+        public RunMetadata RunInfo { get; protected set; }
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
             ThePopulation = new Population(settings);
-            ThePopulation.RandomizePopulation();
+            ThePopulation.Initialize();
+            ThePopulation.Randomize();
         }
         public void RunEpoch()
         {
-            ThePopulation.NaturalSelection();
+            ThePopulation.ApplySelection();
             ThePopulation.Breed();
             ThePopulation.Evaluate();
+            ++RunInfo.Epochs;
+            RunInfo.CurrentFitness = ThePopulation.GetFittest().First().Fitness;
         }
         public void Run()
         {
-            while (StopFunction.ShouldContinue(ThePopulation))
+            RunInfo.StartTime = DateTime.Now;
+            while (StopFunction.ShouldContinue(RunInfo))
             {
                 RunEpoch();
             }
