@@ -7,7 +7,7 @@ namespace SimpleML.GeneticAlgorithm
     public class BasicStopFunction : IStopFunction
     {
         public long MaxEpochs { get; set; } = 10000000;
-        public double MinFitness { get; set; } = 0.9;
+        public double MinFitness { get; set; } = 100;
         public TimeSpan MaxDuration { get; set; } = TimeSpan.FromHours(10);
         private bool _stopRequested;
         public void ForceStop()

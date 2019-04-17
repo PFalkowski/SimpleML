@@ -20,6 +20,8 @@ namespace SimpleML.GeneticAlgorithm
         public Population(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
+            FitnessFunction = settings.FitnessFunction;
+            FittestSelectionAlgorithm = settings.FittestSelectionAlgorithm;
             Rng = settings.Rng;
             Initialize();
             Randomize();
@@ -29,7 +31,7 @@ namespace SimpleML.GeneticAlgorithm
             GenePool = new List<Genotype>(Settings.PopulationSize);
             for (int i = 0; i < Settings.PopulationSize; ++i)
             {
-                GenePool[i] = new Genotype(Settings);
+                GenePool.Add(new Genotype(Settings));
             }
         }
         public void Randomize()
@@ -50,7 +52,10 @@ namespace SimpleML.GeneticAlgorithm
         {
             var selectionResult = FittestSelectionAlgorithm.Select(GenePool);
             GenePool = selectionResult.survivors;
-            BestFit = selectionResult.best.Fitness > BestFit.Fitness ? selectionResult.best : BestFit;
+            if (BestFit == null || selectionResult.best.Fitness > BestFit.Fitness)
+            {
+                BestFit = selectionResult.best;
+            }
         }
         public void Breed()
         {

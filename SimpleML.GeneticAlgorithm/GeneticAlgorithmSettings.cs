@@ -4,14 +4,19 @@ namespace SimpleML.GeneticAlgorithm
 {
     public class GeneticAlgorithmSettings
     {
-        public GeneticAlgorithmSettings(int problemSize)
+        public GeneticAlgorithmSettings(IFitnessFunction fitnessFunction, int problemSize)
         {
             GenotypeLength = problemSize;
+            Rng = new Random();
+            FittestSelectionAlgorithm = new BinaryTournamentWithAlpha(Rng);
+            FitnessFunction = fitnessFunction;
         }
         public Random Rng { get; set; } = new Random();
         public int PopulationSize { get; set; } = 10000;
         public int GenotypeLength { get; }
-        public double CrossoverRate { get; internal set; }
-        IStopFunction StopFunction { get; set; } = new BasicStopFunction();
+        public double CrossoverRate { get; protected set; }
+        public IStopFunction StopFunction { get; set; } = new BasicStopFunction();
+        public ISelectionAlgorithm FittestSelectionAlgorithm { get; set; }
+        public IFitnessFunction FitnessFunction { get; protected set; }
     }
 }

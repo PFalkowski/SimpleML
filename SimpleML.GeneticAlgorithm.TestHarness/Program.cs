@@ -7,7 +7,7 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
     {
         static void Main(string[] args)
         {
-            var settings = new GeneticAlgorithmSettings(BasicStockTrading.Prices.Count);
+            var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), BasicStockTrading.Prices.Count);
             var algorithm = new GeneticAlgorithm(settings);
             algorithm.Run();
         }

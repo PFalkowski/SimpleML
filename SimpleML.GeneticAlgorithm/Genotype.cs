@@ -12,6 +12,7 @@ namespace SimpleML.GeneticAlgorithm
         public Random Rng { get; set; }
         public Genotype(GeneticAlgorithmSettings settings)
         {
+            Rng = settings.Rng;
             Value = new bool[settings.GenotypeLength];
             MutationRate = 1.0 / settings.GenotypeLength;
             CrossoverRate = settings.CrossoverRate;
