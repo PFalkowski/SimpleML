@@ -12,6 +12,7 @@ namespace SimpleML.GeneticAlgorithm
 
         public Random Rng { get; protected set; }
         public List<Genotype> GenePool { get; protected set; }
+        public Genotype BestFit { get; protected set; }
         public IFitnessFunction FitnessFunction { get; protected set; }
         public ISelectionAlgorithm FittestSelectionAlgorithm { get; protected set; }
         public GeneticAlgorithmSettings Settings { get; protected set; }
@@ -47,7 +48,9 @@ namespace SimpleML.GeneticAlgorithm
         }
         public void ApplySelection()
         {
-            GenePool = FittestSelectionAlgorithm.Select(GenePool);
+            var selectionResult = FittestSelectionAlgorithm.Select(GenePool);
+            GenePool = selectionResult.survivors;
+            BestFit = selectionResult.best.Fitness > BestFit.Fitness ? selectionResult.best : BestFit;
         }
         public void Breed()
         {

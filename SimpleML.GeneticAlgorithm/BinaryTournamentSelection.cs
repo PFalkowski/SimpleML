@@ -12,11 +12,13 @@ namespace SimpleML.GeneticAlgorithm
         {
             _rng = rng;
         }
-        public List<Genotype> Select(IList<Genotype> organisms)
+        public (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms)
         {
-            if (organisms.Count < 2) return organisms.ToList();
+            if (organisms.Count < 2) throw new ArgumentException(nameof(organisms));
             var selected = new List<Genotype>(organisms.Count);
-            while (selected.Count != organisms.Count)
+            Genotype alpha = organisms[0];
+            int i = 0;
+            while (selected.Count < organisms.Count)
             {
                 var organismA = organisms[_rng.Next(0, organisms.Count)];
                 Genotype organismB;
@@ -24,8 +26,13 @@ namespace SimpleML.GeneticAlgorithm
                 { organismB = organisms[_rng.Next(0, organisms.Count)]; }
                 while (organismA == organismB);
                 selected.Add(organismA.Fitness >= organismB.Fitness ? organismA : organismB);
+                if (organisms[i].Fitness > alpha.Fitness)
+                {
+                    alpha = organisms[i];
+                }
+                ++i;
             }
-            return selected;
+            return (survivors: selected, best: alpha);
         }
     }
 }

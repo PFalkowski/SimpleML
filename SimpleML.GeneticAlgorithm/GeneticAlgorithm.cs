@@ -24,7 +24,7 @@ namespace SimpleML.GeneticAlgorithm
             ThePopulation.Breed();
             ThePopulation.Evaluate();
             ++RunInfo.Epochs;
-            RunInfo.CurrentFitness = ThePopulation.GetFittest().First().Fitness;
+            RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
         }
         public void Run()
         {
