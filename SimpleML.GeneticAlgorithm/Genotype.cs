@@ -17,11 +17,12 @@ namespace SimpleML.GeneticAlgorithm
             MutationRate = 1.0 / settings.GenotypeLength;
             CrossoverRate = settings.CrossoverRate;
         }
-        public Genotype(int genotypeLength, double crossoverRate)
+        public Genotype(int genotypeLength, double crossoverRate, Random rng)
         {
             Value = new bool[genotypeLength];
             MutationRate = 1.0 / genotypeLength;
             CrossoverRate = crossoverRate;
+            Rng = rng;
         }
         public bool this[int i]
         {
@@ -52,7 +53,7 @@ namespace SimpleML.GeneticAlgorithm
         {
             if (Value.Length < 2 || Rng.NextDouble() >= CrossoverRate) return this;
             var splitPoint = Rng.Next(1, Value.Length);
-            var child = new Genotype(Value.Length, CrossoverRate);
+            var child = new Genotype(Value.Length, CrossoverRate, Rng);
             child.Value = new bool[Value.Length];
             for (int i = 0; i < child.Value.Length; ++i)
             {

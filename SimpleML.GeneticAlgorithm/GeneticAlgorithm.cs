@@ -27,8 +27,10 @@ namespace SimpleML.GeneticAlgorithm
             ThePopulation.ApplySelection();
             ThePopulation.Breed();
             ThePopulation.Evaluate();
+
             ++RunInfo.Epochs;
             RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
+            RunInfo.LastNFitnesses.Add(ThePopulation.BestFit.Fitness);
         }
         public void Run()
         {

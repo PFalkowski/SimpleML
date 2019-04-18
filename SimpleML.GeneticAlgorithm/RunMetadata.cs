@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SimpleML.GeneticAlgorithm
 {
     public class RunMetadata
     {
-        public long Epochs { get; internal set; }
-        public double CurrentFitness { get; internal set; }
-        public DateTime StartTime { get; internal set; }
-        public RunStatus Status { get; internal set; }
-
+        public ulong Epochs { get; set; }
+        public double CurrentFitness { get; set; }
+        public DateTime StartTime { get; set; }
+        public RunStatus Status { get; set; }
+        public List<double> LastNFitnesses { get; set; } = new List<double>();
         public override string ToString()
         {
             return $"Epoch: {Epochs}, CurrentFitness: {CurrentFitness}";
         }
+
+        //internal void UpdateOnEpoch(Population thePopulation)
+        //{
+        //}
     }
 }

@@ -6,13 +6,23 @@ namespace SimpleML.GeneticAlgorithm
 {
     public class BasicStopFunction : IStopFunction
     {
-        public long MaxEpochs { get; set; } = 10000000;
+        public ulong MaxEpochs { get; set; } = 100000000;
         public double MinFitness { get; set; } = 100;
         public TimeSpan MaxDuration { get; set; } = TimeSpan.FromHours(10);
+        public int DeltaNoChangeMaxEpochs { get; set; } = 100;
         private bool _stopRequested;
         public void ForceStop()
         {
             _stopRequested = true;
+        }
+        private double CalculateDeltaChange(List<double> deltas)
+        {
+            double absSum = 0.0;
+            for (int i = deltas.Count -1; i > deltas.Count - 1 - DeltaNoChangeMaxEpochs; --i)
+            {
+                absSum += Math.Abs(deltas[i] - deltas[i - 1]);
+            }
+            return absSum;
         }
         public bool ShouldContinue(RunMetadata learningMetadata)
         {
@@ -27,6 +37,11 @@ namespace SimpleML.GeneticAlgorithm
                 learningMetadata.CurrentFitness >= MinFitness)
             {
                 return false;
+            }
+            else if (learningMetadata.LastNFitnesses.Count >= DeltaNoChangeMaxEpochs * 2)
+            {
+                if (CalculateDeltaChange(learningMetadata.LastNFitnesses) < double.Epsilon)
+                    return false;
             }
             return true;
         }

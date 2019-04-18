@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions.Standard.Randomization;
+using System;
 using System.Collections.Generic;
 
 namespace SimpleML.GeneticAlgorithm.TestHarness
@@ -8,7 +9,8 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
         static void Main(string[] args)
         {
             var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), BasicStockTrading.Prices.Count);
-            settings.StopFunction = new BasicStopFunction { MinFitness = 144 };
+            settings.StopFunction = new BasicStopFunction { MinFitness = 335 };
+            settings.Rng = new StrongRandom();
             var algorithm = new GeneticAlgorithm(settings);
             algorithm.Run();
         }
