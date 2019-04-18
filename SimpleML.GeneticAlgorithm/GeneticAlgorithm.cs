@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoggerLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace SimpleML.GeneticAlgorithm
         public GeneticAlgorithmSettings Settings { get; protected set; }
         public IStopFunction StopFunction { get; protected set; }
         public RunMetadata RunInfo { get; protected set; } = new RunMetadata();
+        public ILogger Logger { get; protected set; }
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
@@ -18,6 +20,7 @@ namespace SimpleML.GeneticAlgorithm
             ThePopulation.Initialize();
             ThePopulation.Randomize();
             StopFunction = settings.StopFunction;
+            Logger = settings.Logger;
         }
         public void RunEpoch()
         {
@@ -29,10 +32,20 @@ namespace SimpleML.GeneticAlgorithm
         }
         public void Run()
         {
-            RunInfo.StartTime = DateTime.Now;
-            while (StopFunction.ShouldContinue(RunInfo))
+            try
             {
-                RunEpoch();
+                RunInfo.StartTime = DateTime.Now;
+                RunInfo.Status = RunStatus.Running;
+                while (StopFunction.ShouldContinue(RunInfo))
+                {
+                    RunEpoch();
+                    Logger?.LogInfo(RunInfo.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex);
+                RunInfo.Status = RunStatus.Faulted;
             }
         }
     }

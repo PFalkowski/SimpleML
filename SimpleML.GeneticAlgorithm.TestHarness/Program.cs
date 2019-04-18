@@ -8,6 +8,7 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
         static void Main(string[] args)
         {
             var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), BasicStockTrading.Prices.Count);
+            settings.StopFunction = new BasicStopFunction { MinFitness = 144 };
             var algorithm = new GeneticAlgorithm(settings);
             algorithm.Run();
         }
