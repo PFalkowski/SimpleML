@@ -10,7 +10,7 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
         {
             var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), BasicStockTrading.Prices.Count);
             settings.StopFunction = new BasicStopFunction { MinFitness = 335 };
-            settings.Rng = new StrongRandom();
+            settings.Rng = new StrongRandom(new BufferedRadnomProvider((settings.PopulationSize * settings.GenotypeLength  + (3 * settings.PopulationSize))));
             var algorithm = new GeneticAlgorithm(settings);
             algorithm.Run();
         }
