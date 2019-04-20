@@ -14,9 +14,5 @@ namespace SimpleML.GeneticAlgorithm
         {
             return $"Epoch: {Epochs}, CurrentFitness: {CurrentFitness}";
         }
-
-        //internal void UpdateOnEpoch(Population thePopulation)
-        //{
-        //}
     }
 }
