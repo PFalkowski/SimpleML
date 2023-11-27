@@ -2,8 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Extensions.Serialization" Version="3.3.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleML.GeneticAlgorithm\SimpleML.GeneticAlgorithm.csproj" />

@@ -1,6 +1,7 @@
 ﻿using Extensions.Standard.Randomization;
 using System;
 using System.Collections.Generic;
+using Extensions.Serialization;
 
 namespace SimpleML.GeneticAlgorithm.TestHarness
 {
@@ -8,11 +9,20 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
     {
         static void Main(string[] args)
         {
-            var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), BasicStockTrading.Prices.Count);
+            var settings = new GeneticAlgorithmSettings(new BasicStockTrading(), Prices.Count);
             settings.StopFunction = new BasicStopFunction { MinFitness = 335 };
-            settings.Rng = new StrongRandom(new BufferedRadnomProvider((settings.PopulationSize * settings.GenotypeLength  + (3 * settings.PopulationSize))));
+            settings.Rng = new StrongRandom(new BufferedRadnomProvider((settings.PopulationSize * settings.GenotypeLength + (3 * settings.PopulationSize))));
             var algorithm = new GeneticAlgorithm(settings);
             algorithm.Run();
+            //var csvRes = algorithm.ThePopulation.BestFit.Value.SerializeToCsv();
+        }
+
+        private class BasicStockPredicting : IFitnessFunction
+        {
+            public double Evaluate(Genotype genotype)
+            {
+                throw new NotImplementedException();
+            }
         }
         private class BasicStockTrading : IFitnessFunction
         {
@@ -39,7 +49,8 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
                 }
                 return sum;
             }
-            public static List<double> Prices { get; set; } = new List<double>
+        }
+        public static List<double> Prices { get; set; } = new List<double>
         {
             165.075 ,
             173.7   ,
@@ -230,6 +241,5 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
             208.925 ,
             217.325
         };
-        }
     }
 }
