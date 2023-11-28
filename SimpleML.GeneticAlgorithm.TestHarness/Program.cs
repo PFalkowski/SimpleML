@@ -1,7 +1,6 @@
 ﻿using Extensions.Standard.Randomization;
 using System;
 using System.Collections.Generic;
-using Extensions.Serialization;
 
 namespace SimpleML.GeneticAlgorithm.TestHarness
 {

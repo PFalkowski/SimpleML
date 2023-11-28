@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SimpleML.GeneticAlgorithm
 {
@@ -10,6 +7,7 @@ namespace SimpleML.GeneticAlgorithm
         public double MutationRate { get; set; }
         public double CrossoverRate { get; set; }
         public Random Rng { get; set; }
+
         public Genotype(GeneticAlgorithmSettings settings)
         {
             Rng = settings.Rng;
@@ -17,6 +15,7 @@ namespace SimpleML.GeneticAlgorithm
             MutationRate = 1.0 / settings.GenotypeLength;
             CrossoverRate = settings.CrossoverRate;
         }
+
         public Genotype(int genotypeLength, double crossoverRate, Random rng)
         {
             Value = new bool[genotypeLength];
@@ -24,17 +23,19 @@ namespace SimpleML.GeneticAlgorithm
             CrossoverRate = crossoverRate;
             Rng = rng;
         }
+
         public bool this[int i]
         {
-            get { return Value[i]; }
-            protected set { Value[i] = value; }
+            get => Value[i];
+            protected set => Value[i] = value;
         }
+
         public bool[] Value { get; protected set; }
         public double Fitness { get; internal set; }
 
         public void Randomize()
         {
-            for (int i = 0; i < Value.Length; ++i)
+            for (var i = 0; i < Value.Length; ++i)
             {
                 Value[i] = Rng.NextDouble() > 0.5;
             }
@@ -42,7 +43,7 @@ namespace SimpleML.GeneticAlgorithm
 
         public void Mutate()
         {
-            for (int i = 0; i < Value.Length; ++i)
+            for (var i = 0; i < Value.Length; ++i)
             {
                 if (Rng.NextDouble() < MutationRate)
                     Value[i] = !Value[i];
@@ -51,14 +52,19 @@ namespace SimpleML.GeneticAlgorithm
 
         public Genotype CrossoverWith(Genotype secondParent)
         {
-            if (Value.Length < 2 || Rng.NextDouble() >= CrossoverRate) return this;
+            if (Value.Length < 2 || Rng.NextDouble() >= CrossoverRate) 
+                return this;
+
             var splitPoint = Rng.Next(1, Value.Length);
-            var child = new Genotype(Value.Length, CrossoverRate, Rng);
-            child.Value = new bool[Value.Length];
-            for (int i = 0; i < child.Value.Length; ++i)
+            var child = new Genotype(Value.Length, CrossoverRate, Rng)
+            {
+                Value = new bool[Value.Length]
+            };
+            for (var i = 0; i < child.Value.Length; ++i)
             {
                 child.Value[i] = i < splitPoint ? this[i] : secondParent[i];
             }
+
             return child;
         }
     }

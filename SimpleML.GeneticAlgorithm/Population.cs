@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SimpleML.GeneticAlgorithm
@@ -29,7 +27,7 @@ namespace SimpleML.GeneticAlgorithm
         public void Initialize()
         {
             GenePool = new List<Genotype>(Settings.PopulationSize);
-            for (int i = 0; i < Settings.PopulationSize; ++i)
+            for (var i = 0; i < Settings.PopulationSize; ++i)
             {
                 GenePool.Add(new Genotype(Settings));
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleML.GeneticAlgorithm
 {
@@ -17,8 +16,8 @@ namespace SimpleML.GeneticAlgorithm
         }
         private double CalculateDeltaChange(List<double> deltas)
         {
-            double absSum = 0.0;
-            for (int i = deltas.Count -1; i > deltas.Count - 1 - DeltaNoChangeMaxEpochs; --i)
+            var absSum = 0.0;
+            for (var i = deltas.Count -1; i > deltas.Count - 1 - DeltaNoChangeMaxEpochs; --i)
             {
                 absSum += Math.Abs(deltas[i] - deltas[i - 1]);
             }

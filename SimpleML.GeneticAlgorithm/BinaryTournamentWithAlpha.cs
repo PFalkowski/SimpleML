@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SimpleML.GeneticAlgorithm
 {
@@ -16,8 +14,8 @@ namespace SimpleML.GeneticAlgorithm
         {
             if (organisms.Count < 3) throw new ArgumentException(nameof(organisms));
             var selected = new List<Genotype>(organisms.Count);
-            Genotype alpha = organisms[0];
-            int i = 0;
+            var alpha = organisms[0];
+            var i = 0;
             while (selected.Count < organisms.Count - 1)
             {
                 var organismA = organisms[_rng.Next(0, organisms.Count)];
