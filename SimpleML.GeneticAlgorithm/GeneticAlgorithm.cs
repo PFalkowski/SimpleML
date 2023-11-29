@@ -10,6 +10,7 @@ namespace SimpleML.GeneticAlgorithm
         public IStopFunction StopFunction { get; protected set; }
         public RunMetadata RunInfo { get; protected set; } = new RunMetadata();
         public ILogger Logger { get; protected set; }
+
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
@@ -19,6 +20,7 @@ namespace SimpleML.GeneticAlgorithm
             StopFunction = settings.StopFunction;
             Logger = settings.Logger;
         }
+
         public void RunEpoch()
         {
             ThePopulation.ApplySelection();
@@ -29,6 +31,7 @@ namespace SimpleML.GeneticAlgorithm
             RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
             RunInfo.LastNFitnesses.Add(ThePopulation.BestFit.Fitness);
         }
+
         public void Run()
         {
             try

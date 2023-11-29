@@ -5,14 +5,19 @@ namespace SimpleML.GeneticAlgorithm
 {
     public class BinaryTournamentWithAlpha : ISelectionAlgorithm
     {
-        private Random _rng;
+        private readonly Random _rng;
         public BinaryTournamentWithAlpha(Random rng)
         {
             _rng = rng;
         }
-        public (List<Genotype> survivors, Genotype best)  Select(IList<Genotype> organisms)
+
+        public (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms)
         {
-            if (organisms.Count < 3) throw new ArgumentException(nameof(organisms));
+            if (organisms.Count < 3)
+            {
+                throw new ArgumentException(null, nameof(organisms));
+            }
+
             var selected = new List<Genotype>(organisms.Count);
             var alpha = organisms[0];
             var i = 0;
@@ -21,16 +26,22 @@ namespace SimpleML.GeneticAlgorithm
                 var organismA = organisms[_rng.Next(0, organisms.Count)];
                 Genotype organismB;
                 do
-                { organismB = organisms[_rng.Next(0, organisms.Count)]; }
+                {
+                    organismB = organisms[_rng.Next(0, organisms.Count)];
+                }
                 while (organismA == organismB);
+
                 selected.Add(organismA.Fitness >= organismB.Fitness ? organismA : organismB);
                 if (organisms[i].Fitness > alpha.Fitness)
                 {
                     alpha = organisms[i];
                 }
+
                 ++i;
             }
+
             selected.Add(alpha);
+
             return (survivors: selected, best: alpha);
         }
     }

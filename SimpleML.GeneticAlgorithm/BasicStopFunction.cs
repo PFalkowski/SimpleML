@@ -21,6 +21,7 @@ namespace SimpleML.GeneticAlgorithm
             {
                 absSum += Math.Abs(deltas[i] - deltas[i - 1]);
             }
+
             return absSum;
         }
         public bool ShouldContinue(RunMetadata learningMetadata)
@@ -28,20 +29,23 @@ namespace SimpleML.GeneticAlgorithm
             if (_stopRequested)
             {
                 _stopRequested = false;
+
                 return false;
             }
-            else if (
-                DateTime.Now - learningMetadata.StartTime > MaxDuration ||
+
+            if (DateTime.Now - learningMetadata.StartTime > MaxDuration ||
                 learningMetadata.Epochs >= MaxEpochs ||
                 learningMetadata.CurrentFitness >= MinFitness)
             {
                 return false;
             }
-            else if (learningMetadata.LastNFitnesses.Count >= DeltaNoChangeMaxEpochs * 2)
+
+            if (learningMetadata.LastNFitnesses.Count >= DeltaNoChangeMaxEpochs * 2)
             {
-                if (CalculateDeltaChange(learningMetadata.LastNFitnesses) < double.Epsilon)
+                if (CalculateDeltaChange(learningMetadata.LastNFitnesses) <= double.Epsilon)
                     return false;
             }
+
             return true;
         }
     }
