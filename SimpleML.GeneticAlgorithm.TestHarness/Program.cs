@@ -1,6 +1,7 @@
 ﻿using Extensions.Standard.Randomization;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimpleML.GeneticAlgorithm.TestHarness
 {
@@ -18,18 +19,19 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
 
         private class BasicStockPredicting : IFitnessFunction
         {
-            public double Evaluate(Genotype genotype)
+            public Task<double> Evaluate(Genotype genotype)
             {
                 throw new NotImplementedException();
             }
         }
         private class BasicStockTrading : IFitnessFunction
         {
-            public double Evaluate(Genotype genotype)
+            public Task<double> Evaluate(Genotype genotype)
             {
-                bool alreadyBought = false;
+                var alreadyBought = false;
                 var sum = 0.0;
-                for (int i = 0; i < Prices.Count; i++)
+
+                for (var i = 0; i < Prices.Count; i++)
                 {
                     if (genotype[i] && !alreadyBought)
                     {
@@ -42,11 +44,13 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
                         alreadyBought = false;
                     }
                 }
+
                 if (alreadyBought)
                 {
                     sum -= Prices[Prices.Count - 1];
                 }
-                return sum;
+
+                return Task.FromResult(sum);
             }
         }
         public static List<double> Prices { get; set; } = new List<double>

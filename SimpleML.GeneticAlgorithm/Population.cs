@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimpleML.GeneticAlgorithm
@@ -42,22 +43,29 @@ namespace SimpleML.GeneticAlgorithm
             }
         }
 
-        public void Evaluate()
+        public async Task Evaluate()
         {
             if (Settings.Parallel)
             {
-                Parallel.ForEach(GenePool, genotype =>
-                {
-                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
-                });
+                var tasksAggregate = GenePool
+                    .Select(GenotypeFitnessAsync)
+                    .Cast<Task>()
+                    .ToList();
+
+                await Task.WhenAll(tasksAggregate);
             }
             else
             {
                 foreach (var genotype in GenePool)
                 {
-                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
+                    genotype.Fitness = await FitnessFunction.Evaluate(genotype);
                 }
             }
+        }
+
+        private async Task<double> GenotypeFitnessAsync(Genotype genotype)
+        {
+            return genotype.Fitness = await FitnessFunction.Evaluate(genotype);
         }
 
         public void ApplySelection()
