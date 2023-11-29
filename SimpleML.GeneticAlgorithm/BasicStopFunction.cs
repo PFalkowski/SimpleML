@@ -10,10 +10,12 @@ namespace SimpleML.GeneticAlgorithm
         public TimeSpan MaxDuration { get; set; } = TimeSpan.FromHours(10);
         public int DeltaNoChangeMaxEpochs { get; set; } = 100;
         private bool _stopRequested;
+
         public void ForceStop()
         {
             _stopRequested = true;
         }
+
         private double CalculateDeltaChange(List<double> deltas)
         {
             var absSum = 0.0;
@@ -24,6 +26,7 @@ namespace SimpleML.GeneticAlgorithm
 
             return absSum;
         }
+
         public bool ShouldContinue(RunMetadata learningMetadata)
         {
             if (_stopRequested)

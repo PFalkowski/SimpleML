@@ -24,6 +24,7 @@ namespace SimpleML.GeneticAlgorithm
             Initialize();
             Randomize();
         }
+
         public void Initialize()
         {
             GenePool = new List<Genotype>(Settings.PopulationSize);
@@ -32,6 +33,7 @@ namespace SimpleML.GeneticAlgorithm
                 GenePool.Add(new Genotype(Settings));
             }
         }
+
         public void Randomize()
         {
             foreach (var gene in GenePool)
@@ -39,13 +41,25 @@ namespace SimpleML.GeneticAlgorithm
                 gene.Randomize();
             }
         }
+
         public void Evaluate()
         {
-            Parallel.ForEach(GenePool, genotype =>
+            if (Settings.Parallel)
             {
-                genotype.Fitness = FitnessFunction.Evaluate(genotype);
-            });
+                Parallel.ForEach(GenePool, genotype =>
+                {
+                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
+                });
+            }
+            else
+            {
+                foreach (var genotype in GenePool)
+                {
+                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
+                }
+            }
         }
+
         public void ApplySelection()
         {
             var selectionResult = FittestSelectionAlgorithm.Select(GenePool);
@@ -55,6 +69,7 @@ namespace SimpleML.GeneticAlgorithm
                 BestFit = selectionResult.best;
             }
         }
+
         public void Breed()
         {
             var parents = GenePool;

@@ -46,7 +46,9 @@ namespace SimpleML.GeneticAlgorithm
             for (var i = 0; i < Value.Length; ++i)
             {
                 if (Rng.NextDouble() < MutationRate)
+                {
                     Value[i] = !Value[i];
+                }
             }
         }
 

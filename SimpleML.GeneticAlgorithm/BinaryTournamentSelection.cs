@@ -10,6 +10,7 @@ namespace SimpleML.GeneticAlgorithm
         {
             _rng = rng;
         }
+
         public (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms)
         {
             if (organisms.Count < 2)

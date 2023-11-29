@@ -43,6 +43,7 @@ namespace SimpleML.GeneticAlgorithm
                     RunEpoch();
                     Logger?.LogInfo(RunInfo.ToString());
                 }
+                RunInfo.Status = RunStatus.Finished;
             }
             catch (Exception ex)
             {

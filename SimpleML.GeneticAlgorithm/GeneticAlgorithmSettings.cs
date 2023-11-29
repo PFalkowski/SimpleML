@@ -15,6 +15,7 @@ namespace SimpleML.GeneticAlgorithm
         public Random Rng { get; set; } = new Random();
         public int PopulationSize { get; set; } = 10000;
         public int GenotypeLength { get; }
+        public bool Parallel { get; set; } = true;
         public double CrossoverRate { get; protected set; } = 0.5;
         public IStopFunction StopFunction { get; set; } = new BasicStopFunction();
         public ISelectionAlgorithm FittestSelectionAlgorithm { get; set; }
