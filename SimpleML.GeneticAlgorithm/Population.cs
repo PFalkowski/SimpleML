@@ -49,7 +49,6 @@ namespace SimpleML.GeneticAlgorithm
             {
                 var tasksAggregate = GenePool
                     .Select(GenotypeFitnessAsync)
-                    .Cast<Task>()
                     .ToList();
 
                 await Task.WhenAll(tasksAggregate);
@@ -63,9 +62,12 @@ namespace SimpleML.GeneticAlgorithm
             }
         }
 
-        private async Task<double> GenotypeFitnessAsync(Genotype genotype)
+        private Task GenotypeFitnessAsync(Genotype genotype)
         {
-            return genotype.Fitness = await FitnessFunction.Evaluate(genotype);
+            return Task.Run(async () =>
+            {
+                genotype.Fitness = await FitnessFunction.Evaluate(genotype);
+            });
         }
 
         public void ApplySelection()

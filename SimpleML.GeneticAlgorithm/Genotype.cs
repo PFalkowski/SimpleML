@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleML.GeneticAlgorithm
 {
@@ -7,6 +11,8 @@ namespace SimpleML.GeneticAlgorithm
         public double MutationRate { get; set; }
         public double CrossoverRate { get; set; }
         public Random Rng { get; set; }
+        public bool[] Value { get; protected set; }
+        public double Fitness { get; internal set; }
 
         public Genotype(GeneticAlgorithmSettings settings)
         {
@@ -29,9 +35,6 @@ namespace SimpleML.GeneticAlgorithm
             get => Value[i];
             protected set => Value[i] = value;
         }
-
-        public bool[] Value { get; protected set; }
-        public double Fitness { get; internal set; }
 
         public void Randomize()
         {
@@ -68,6 +71,24 @@ namespace SimpleML.GeneticAlgorithm
             }
 
             return child;
+        }
+
+        public async Task SaveToFileAsync(FileInfo file)
+        {
+            var csvSerialized =
+                string.Join(Environment.NewLine, Value.Select(x => x.ToString()));
+            await File.WriteAllTextAsync(file.FullName, csvSerialized);
+        }
+
+        public async Task ReadFromFileAsync(FileInfo file)
+        {
+            var csvLines = await File.ReadAllLinesAsync(file.FullName);
+            var listOfDeserializedValues = csvLines.Select(bool.Parse).ToList();
+
+            if (listOfDeserializedValues.Count > 0)
+            {
+                Value = listOfDeserializedValues.ToArray();
+            }
         }
     }
 }
