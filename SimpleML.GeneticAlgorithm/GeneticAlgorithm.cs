@@ -1,5 +1,6 @@
 ﻿using LoggerLite;
 using System;
+using System.Threading.Tasks;
 
 namespace SimpleML.GeneticAlgorithm
 {
@@ -21,18 +22,20 @@ namespace SimpleML.GeneticAlgorithm
             Logger = settings.Logger;
         }
 
-        public void RunEpoch()
+        public async Task RunEpoch()
         {
+            await ThePopulation.Evaluate();
+            RunInfo.SimulationsCount += (uint)ThePopulation.GenePool.Count;
+
             ThePopulation.ApplySelection();
             ThePopulation.Breed();
-            ThePopulation.Evaluate();
 
             ++RunInfo.Epochs;
             RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
             RunInfo.LastNFitnesses.Add(ThePopulation.BestFit.Fitness);
         }
 
-        public void Run()
+        public async Task Run()
         {
             try
             {
@@ -40,7 +43,7 @@ namespace SimpleML.GeneticAlgorithm
                 RunInfo.Status = RunStatus.Running;
                 while (StopFunction.ShouldContinue(RunInfo))
                 {
-                    RunEpoch();
+                    await RunEpoch();
                     Logger?.LogInfo(RunInfo.ToString());
                 }
                 RunInfo.Status = RunStatus.Finished;

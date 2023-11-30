@@ -6,6 +6,7 @@ namespace SimpleML.GeneticAlgorithm
     public class RunMetadata
     {
         public ulong Epochs { get; set; }
+        public ulong SimulationsCount { get; set; }
         public double CurrentFitness { get; set; }
         public DateTime StartTime { get; set; }
         public RunStatus Status { get; set; }
