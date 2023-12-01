@@ -8,6 +8,7 @@ namespace SimpleML.GeneticAlgorithm
 {
     public class Population
     {
+        private readonly RunMetadata _runInfo;
         protected readonly object _syncRoot = new object();
 
         public Random Rng { get; protected set; }
@@ -17,8 +18,9 @@ namespace SimpleML.GeneticAlgorithm
         public ISelectionAlgorithm FittestSelectionAlgorithm { get; protected set; }
         public GeneticAlgorithmSettings Settings { get; protected set; }
 
-        public Population(GeneticAlgorithmSettings settings)
+        public Population(GeneticAlgorithmSettings settings, RunMetadata runInfo)
         {
+            _runInfo = runInfo;
             Settings = settings;
             FitnessFunction = settings.FitnessFunction;
             FittestSelectionAlgorithm = settings.FittestSelectionAlgorithm;
@@ -46,46 +48,31 @@ namespace SimpleML.GeneticAlgorithm
 
         public async Task Evaluate()
         {
-            if (Settings.Parallel)
-            {
-                var threads = new List<Thread>();
-                foreach (var gene in GenePool)
-                {
-                    async void Start() => gene.Fitness = await FitnessFunction.Evaluate(gene);
-
-                    Thread thread = new Thread(Start);
-                    threads.Add(thread);
-                    thread.Start();
-                }
-                // Wait for all threads to complete
-                foreach (var thread in threads)
-                {
-                    thread.Join();
-                }
-
-
-                //var tasksAggregate = GenePool
-                //    .Select(GenotypeFitnessAsync)
-                //    .ToList();
-
-                //await Task.WhenAll(tasksAggregate);
-            }
-            else
-            {
+            //if (Settings.Parallel)
+            //{
+            //    Parallel.ForEach(GenePool, genotype =>
+            //    {
+            //        genotype.Fitness = FitnessFunction.Evaluate(genotype);
+            //    });
+            //}
+            //else
+            //{
                 foreach (var genotype in GenePool)
                 {
-                    genotype.Fitness = await FitnessFunction.Evaluate(genotype);
+                    genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
+                    ++_runInfo.SimulationsCount;
+                    _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
                 }
-            }
+            //}
         }
 
-        private Task GenotypeFitnessAsync(Genotype genotype)
-        {
-            return Task.Run(async () =>
-            {
-                genotype.Fitness = await FitnessFunction.Evaluate(genotype);
-            });
-        }
+        //private Task GenotypeFitnessAsync(Genotype genotype)
+        //{
+        //    return Task.Run(async () =>
+        //    {
+        //        genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
+        //    });
+        //}
 
         public void ApplySelection()
         {

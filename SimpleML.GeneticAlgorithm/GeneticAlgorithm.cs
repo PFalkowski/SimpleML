@@ -17,7 +17,7 @@ namespace SimpleML.GeneticAlgorithm
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
             Settings = settings;
-            ThePopulation = new Population(settings);
+            ThePopulation = new Population(settings, RunInfo);
             ThePopulation.Initialize();
             ThePopulation.Randomize();
             StopFunction = settings.StopFunction;
@@ -47,7 +47,6 @@ namespace SimpleML.GeneticAlgorithm
         public async Task RunEpoch()
         {
             await ThePopulation.Evaluate();
-            RunInfo.SimulationsCount += (uint)ThePopulation.GenePool.Count;
 
             ThePopulation.ApplySelection();
             ThePopulation.Breed();
