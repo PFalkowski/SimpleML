@@ -48,22 +48,30 @@ namespace SimpleML.GeneticAlgorithm
 
         public async Task Evaluate()
         {
-            //if (Settings.Parallel)
-            //{
-            //    Parallel.ForEach(GenePool, genotype =>
-            //    {
-            //        genotype.Fitness = FitnessFunction.Evaluate(genotype);
-            //    });
-            //}
-            //else
-            //{
+            if (Settings.Parallel)
+            {
+                var tasksAggregate = new List<Task>();
                 foreach (var genotype in GenePool)
                 {
-                    genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
-                    ++_runInfo.SimulationsCount;
-                    _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+                    tasksAggregate.Add(RunOneIteration(genotype));
                 }
-            //}
+
+                await Task.WhenAll(tasksAggregate);
+            }
+            else
+            {
+                foreach (var genotype in GenePool)
+                {
+                    await RunOneIteration(genotype);
+                }
+            }
+        }
+
+        private async Task RunOneIteration(Genotype genotype)
+        {
+            genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
+            ++_runInfo.SimulationsCount;
+            _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
         }
 
         //private Task GenotypeFitnessAsync(Genotype genotype)
