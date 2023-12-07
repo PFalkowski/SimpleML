@@ -4,6 +4,6 @@ namespace SimpleML.GeneticAlgorithm
 {
     public interface ISelectionAlgorithm
     {
-        (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms);
+        (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms, int size);
     }
 }

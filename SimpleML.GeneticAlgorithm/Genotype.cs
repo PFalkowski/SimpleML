@@ -57,7 +57,7 @@ namespace SimpleML.GeneticAlgorithm
 
         public Genotype CrossoverWith(Genotype secondParent)
         {
-            if (Value.Length < 2 || Rng.NextDouble() >= CrossoverRate) 
+            if (Value.Length < 2) 
                 return this;
 
             var splitPoint = Rng.Next(1, Value.Length);

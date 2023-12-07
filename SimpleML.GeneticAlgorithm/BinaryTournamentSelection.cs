@@ -11,17 +11,17 @@ namespace SimpleML.GeneticAlgorithm
             _rng = rng;
         }
 
-        public (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms)
+        public (List<Genotype> survivors, Genotype best) Select(IList<Genotype> organisms, int size)
         {
             if (organisms.Count < 2)
             {
                 throw new ArgumentException(null, nameof(organisms));
             }
 
-            var selected = new List<Genotype>(organisms.Count);
+            var selected = new List<Genotype>(size);
             var alpha = organisms[0];
             var i = 0;
-            while (selected.Count < organisms.Count)
+            while (selected.Count < size)
             {
                 var organismA = organisms[_rng.Next(0, organisms.Count)];
                 Genotype organismB;

@@ -70,8 +70,11 @@ namespace SimpleML.GeneticAlgorithm
         private async Task RunOneIteration(Genotype genotype)
         {
             genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
-            ++_runInfo.SimulationsCount;
-            _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+            lock (_syncRoot)
+            {
+                ++_runInfo.SimulationsCount;
+                _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+            }
         }
 
         //private Task GenotypeFitnessAsync(Genotype genotype)
@@ -84,7 +87,7 @@ namespace SimpleML.GeneticAlgorithm
 
         public void ApplySelection()
         {
-            var selectionResult = FittestSelectionAlgorithm.Select(GenePool);
+            var selectionResult = FittestSelectionAlgorithm.Select(GenePool, Settings.SurvivorsCount);
             GenePool = selectionResult.survivors;
             if (BestFit == null || selectionResult.best.Fitness > BestFit.Fitness)
             {
@@ -94,19 +97,34 @@ namespace SimpleML.GeneticAlgorithm
 
         public void Breed()
         {
+            if (Settings.PopulationSize < Settings.NewOrganismsCount + Settings.SurvivorsCount)
+            {
+                throw new ApplicationException("Incorrect state. Population over 100%.");
+            }
             var parents = GenePool;
             GenePool = new List<Genotype>(Settings.PopulationSize);
-            while (GenePool.Count < Settings.PopulationSize)
+            while (GenePool.Count < Settings.PopulationSize - Settings.NewOrganismsCount)
             {
-                var parentA = parents[Rng.Next(0, Settings.PopulationSize)];
+                var parentA = parents[Rng.Next(0, parents.Count)];
                 Genotype parentB;
                 do
                 {
-                    parentB = parents[Rng.Next(0, Settings.PopulationSize)];
+                    parentB = parents[Rng.Next(0, parents.Count)];
                 } while (parentA == parentB);
+
                 var child = parentA.CrossoverWith(parentB);
-                child.Mutate();
+                if (Rng.NextDouble() < Settings.MutationRate)
+                {
+                    child.Mutate();
+                }
+
                 GenePool.Add(child);
+            }
+
+            while (GenePool.Count < Settings.PopulationSize)
+            {
+                var newOrganism = new Genotype(Settings);
+                GenePool.Add(newOrganism);
             }
         }
     }
