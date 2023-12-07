@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,6 +51,23 @@ namespace SimpleML.GeneticAlgorithm
         {
             if (Settings.Parallel)
             {
+                var threads = new List<Thread>();
+                foreach (var genotype in GenePool)
+                {
+                    var thread = new Thread(() => { genotype.Fitness = FitnessFunction.Evaluate(genotype); });
+                    thread.Start();
+                    threads.Add(thread);
+                    ++_runInfo.SimulationsCount;
+                    _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+                }
+
+                foreach (var thread in threads)
+                {
+                    thread.Join();
+                }
+            }
+            else
+            {
                 var tasksAggregate = new List<Task>();
                 foreach (var genotype in GenePool)
                 {
@@ -57,13 +75,6 @@ namespace SimpleML.GeneticAlgorithm
                 }
 
                 await Task.WhenAll(tasksAggregate);
-            }
-            else
-            {
-                foreach (var genotype in GenePool)
-                {
-                    await RunOneIteration(genotype);
-                }
             }
         }
 
@@ -105,14 +116,23 @@ namespace SimpleML.GeneticAlgorithm
             GenePool = new List<Genotype>(Settings.PopulationSize);
             while (GenePool.Count < Settings.PopulationSize - Settings.NewOrganismsCount)
             {
-                var parentA = parents[Rng.Next(0, parents.Count)];
-                Genotype parentB;
-                do
+                Genotype child;
+                if (parents.Count >= 2)
                 {
-                    parentB = parents[Rng.Next(0, parents.Count)];
-                } while (parentA == parentB);
+                    var parentA = parents[Rng.Next(0, parents.Count)];
+                    Genotype parentB;
+                    do
+                    {
+                        parentB = parents[Rng.Next(0, parents.Count)];
+                    } while (parentA == parentB);
 
-                var child = parentA.CrossoverWith(parentB);
+                    child = parentA.CrossoverWith(parentB);
+                }
+                else
+                {
+                    child = parents.First();
+                }
+
                 if (Rng.NextDouble() < Settings.MutationRate)
                 {
                     child.Mutate();
