@@ -51,30 +51,18 @@ namespace SimpleML.GeneticAlgorithm
         {
             if (Settings.Parallel)
             {
-                var countdown = new CountdownEvent(GenePool.Count);
-                var threads = new List<Thread>();
+                var options = new ParallelOptions { MaxDegreeOfParallelism = GenePool.Count };
 
-                foreach (var genotype in GenePool)
+                Parallel.ForEach(GenePool, options, genotype =>
                 {
-                    var thread = new Thread(() =>
-                    {
-                        genotype.Fitness = FitnessFunction.Evaluate(genotype);
-                        lock (_syncRoot)
-                        {
-                            ++_runInfo.SimulationsCount;
-                            _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
-                        }
-                        countdown.Signal();
-                    }, 100000)
-                    {
-                        Priority = ThreadPriority.AboveNormal
-                    };
-                    //ThreadPool.QueueUserWorkItem(_ => thread.Start());
-                    thread.Start();
-                    threads.Add(thread);
-                }
+                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
 
-                countdown.Wait();
+                    lock (_syncRoot)
+                    {
+                        ++_runInfo.SimulationsCount;
+                        _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+                    }
+                });
             }
             else
             {
