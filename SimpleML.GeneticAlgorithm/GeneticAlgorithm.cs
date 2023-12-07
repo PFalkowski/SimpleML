@@ -13,7 +13,7 @@ namespace SimpleML.GeneticAlgorithm
         public IStopFunction StopFunction { get; protected set; }
         public RunMetadata RunInfo { get; protected set; } = new RunMetadata();
         public ILogger Logger { get; protected set; }
-        private double BestFitnessRecorderDuringThisRuntime { get; set; }
+        private double BestFitnessRecordedDuringThisRuntime { get; set; }
 
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
@@ -54,12 +54,14 @@ namespace SimpleML.GeneticAlgorithm
             ++RunInfo.Epochs;
             RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
             RunInfo.LastNFitnesses.Add(ThePopulation.BestFit.Fitness);
-            BestFitnessRecorderDuringThisRuntime =
-                Math.Max(BestFitnessRecorderDuringThisRuntime, ThePopulation.BestFit.Fitness);
-            if (Settings.ContinueFile != null && ThePopulation.BestFit.Fitness > BestFitnessRecorderDuringThisRuntime)
+            if (Settings.ContinueFile != null 
+                && ThePopulation.BestFit.Fitness > BestFitnessRecordedDuringThisRuntime
+                && ThePopulation.BestFit.Fitness > 0)
             {
                 await SaveWinnerAsync(Settings.ContinueFile);
             }
+            BestFitnessRecordedDuringThisRuntime =
+                Math.Max(BestFitnessRecordedDuringThisRuntime, ThePopulation.BestFit.Fitness);
         }
 
         public async Task Run()

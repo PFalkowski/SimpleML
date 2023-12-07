@@ -51,7 +51,10 @@ namespace SimpleML.GeneticAlgorithm
         {
             if (Settings.Parallel)
             {
-                var options = new ParallelOptions { MaxDegreeOfParallelism = GenePool.Count };
+                var options = new ParallelOptions
+                {
+                    MaxDegreeOfParallelism =  Settings.MaxDegreeOfParallelism
+                };
 
                 Parallel.ForEach(GenePool, options, genotype =>
                 {
@@ -69,37 +72,14 @@ namespace SimpleML.GeneticAlgorithm
                 var tasksAggregate = new List<Task>();
                 foreach (var genotype in GenePool)
                 {
-                    tasksAggregate.Add(RunOneIteration(genotype));
+                    tasksAggregate.Add(RunOneIterationAsync(genotype));
                 }
 
                 await Task.WhenAll(tasksAggregate);
             }
         }
 
-        private void WarmUpThreadPool()
-        {
-            // You can perform some dummy tasks to encourage JIT compilation and warm up the thread pool.
-            const int warmUpTasksCount = 10;
-
-            var warmUpCountdown = new CountdownEvent(warmUpTasksCount);
-
-            for (int i = 0; i < warmUpTasksCount; i++)
-            {
-                ThreadPool.QueueUserWorkItem(state =>
-                {
-                    // Perform a dummy task
-                    // This could be a lightweight operation representing the typical workload.
-                    // It encourages JIT compilation and warms up the thread pool.
-                    Console.WriteLine("Warming up...");
-
-                    warmUpCountdown.Signal();
-                });
-            }
-
-            warmUpCountdown.Wait();
-        }
-
-        private async Task RunOneIteration(Genotype genotype)
+        private async Task RunOneIterationAsync(Genotype genotype)
         {
             genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
             lock (_syncRoot)
@@ -108,14 +88,6 @@ namespace SimpleML.GeneticAlgorithm
                 _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
             }
         }
-
-        //private Task GenotypeFitnessAsync(Genotype genotype)
-        //{
-        //    return Task.Run(async () =>
-        //    {
-        //        genotype.Fitness = await FitnessFunction.EvaluateAsync(genotype);
-        //    });
-        //}
 
         public void ApplySelection()
         {

@@ -27,5 +27,6 @@ namespace SimpleML.GeneticAlgorithm
         public IFitnessFunction FitnessFunction { get; protected set; }
         public ILogger Logger { get; protected set; } = new ConsoleLogger();
         public FileInfo ContinueFile { get; set; }
+        public int MaxDegreeOfParallelism => Math.Min(PopulationSize, 500);
     }
 }
