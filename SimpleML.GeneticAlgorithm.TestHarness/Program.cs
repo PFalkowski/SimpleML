@@ -19,14 +19,20 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
 
         private class BasicStockPredicting : IFitnessFunction
         {
-            public Task<double> Evaluate(Genotype genotype)
+            public Task<double> EvaluateAsync(Genotype genotype)
+            {
+                throw new NotImplementedException();
+            }
+
+            public double Evaluate(Genotype genotype)
             {
                 throw new NotImplementedException();
             }
         }
+
         private class BasicStockTrading : IFitnessFunction
         {
-            public Task<double> Evaluate(Genotype genotype)
+            public double Evaluate(Genotype genotype)
             {
                 var alreadyBought = false;
                 var sum = 0.0;
@@ -50,7 +56,12 @@ namespace SimpleML.GeneticAlgorithm.TestHarness
                     sum -= Prices[Prices.Count - 1];
                 }
 
-                return Task.FromResult(sum);
+                return sum;
+            }
+
+            public Task<double> EvaluateAsync(Genotype genotype)
+            {
+                return Task.FromResult(Evaluate(genotype));
             }
         }
         public static List<double> Prices { get; set; } = new List<double>
