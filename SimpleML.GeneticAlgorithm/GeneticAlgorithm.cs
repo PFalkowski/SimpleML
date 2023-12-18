@@ -52,8 +52,7 @@ namespace SimpleML.GeneticAlgorithm
             ThePopulation.Breed();
 
             ++RunInfo.Epochs;
-            RunInfo.CurrentFitness = ThePopulation.BestFit.Fitness;
-            RunInfo.LastNFitnesses.Add(ThePopulation.BestFit.Fitness);
+            RunInfo.LastNFitnesses.Add(RunInfo.CurrentFitness);
             if (Settings.ContinueFile != null 
                 && ThePopulation.BestFit.Fitness > BestFitnessRecordedDuringThisRuntime
                 && ThePopulation.BestFit.Fitness > 0)

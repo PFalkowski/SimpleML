@@ -10,7 +10,7 @@ namespace SimpleML.GeneticAlgorithm
     public class Population
     {
         private readonly RunMetadata _runInfo;
-        protected readonly object _syncRoot = new object();
+        public readonly object _syncRoot = new object();
 
         public Random Rng { get; protected set; }
         public List<Genotype> GenePool { get; protected set; }
@@ -63,7 +63,7 @@ namespace SimpleML.GeneticAlgorithm
                     lock (_syncRoot)
                     {
                         ++_runInfo.SimulationsCount;
-                        _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+                        _runInfo.PresentNewResult(genotype);
                     }
                 });
             }
@@ -85,7 +85,7 @@ namespace SimpleML.GeneticAlgorithm
             lock (_syncRoot)
             {
                 ++_runInfo.SimulationsCount;
-                _runInfo.CurrentFitness = Math.Max(_runInfo.CurrentFitness, genotype.Fitness);
+                _runInfo.PresentNewResult(genotype);
             }
         }
 
