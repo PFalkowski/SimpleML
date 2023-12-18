@@ -12,8 +12,8 @@
     <Title>SimpleML.GeneticAlgorithm</Title>
     <Company>Piotr Falkowski</Company>
     <Product>SimpleML</Product>
-    <Version>3.1.0</Version>
-    <PackageReleaseNotes>Add EliteSelection. Fix parallelism issues.</PackageReleaseNotes>
+    <Version>3.2.0</Version>
+    <PackageReleaseNotes>Minor display changes.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
