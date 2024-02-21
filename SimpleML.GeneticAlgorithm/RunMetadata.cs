@@ -21,20 +21,18 @@ namespace SimpleML.GeneticAlgorithm
             {
                 CurrentEpochBest = genotype;
             }
+            else if (CurrentEpochBest.Fitness < genotype.Fitness)
+            {
+                CurrentEpochBest = genotype;
+            }
 
             if (BestOverall == null)
             {
                 BestOverall = genotype;
             }
-
-            if (BestOverall.Fitness < genotype.Fitness)
+            else if (BestOverall.Fitness < genotype.Fitness)
             {
                 BestOverall = genotype;
-            }
-
-            if (CurrentEpochBest.Fitness < genotype.Fitness)
-            {
-                CurrentEpochBest = genotype;
             }
         }
     

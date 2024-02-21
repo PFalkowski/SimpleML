@@ -8,7 +8,7 @@ namespace SimpleML.GeneticAlgorithm
     public class Population
     {
         private readonly RunMetadata _runInfo;
-        public readonly object _syncRoot = new object();
+        private readonly object _syncRoot = new object();
 
         public Random Rng { get; protected set; }
         public List<Genotype> GenePool { get; protected set; }
@@ -54,16 +54,9 @@ namespace SimpleML.GeneticAlgorithm
                     MaxDegreeOfParallelism =  Settings.MaxDegreeOfParallelism
                 };
 
-                Parallel.ForEach(GenePool, options, genotype =>
-                {
-                    genotype.Fitness = FitnessFunction.Evaluate(genotype);
-
-                    lock (_syncRoot)
-                    {
-                        ++_runInfo.SimulationsCount;
-                        _runInfo.PresentNewResult(genotype);
-                    }
-                });
+                Parallel.ForEach(GenePool, 
+                    options,
+                    RunOneIteration);
             }
             else
             {
@@ -74,6 +67,17 @@ namespace SimpleML.GeneticAlgorithm
                 }
 
                 await Task.WhenAll(tasksAggregate);
+            }
+        }
+
+        private void RunOneIteration(Genotype genotype)
+        {
+            genotype.Fitness = FitnessFunction.Evaluate(genotype);
+
+            lock (_syncRoot)
+            {
+                ++_runInfo.SimulationsCount;
+                _runInfo.PresentNewResult(genotype);
             }
         }
 
@@ -135,6 +139,7 @@ namespace SimpleML.GeneticAlgorithm
             while (GenePool.Count < Settings.PopulationSize)
             {
                 var newOrganism = new Genotype(Settings);
+                newOrganism.Randomize();
                 GenePool.Add(newOrganism);
             }
         }
