@@ -5,7 +5,7 @@ namespace SimpleML.GeneticAlgorithm
 {
     public class BasicStopFunction : IStopFunction
     {
-        public ulong MaxEpochs { get; set; } = 100000000;
+        public ulong MaxEpochs { get; set; } = 2222222;
         public double MinFitness { get; set; } = 100;
         public TimeSpan MaxDuration { get; set; } = TimeSpan.FromHours(10);
         public int DeltaNoChangeMaxEpochs { get; set; } = 100;
@@ -43,7 +43,7 @@ namespace SimpleML.GeneticAlgorithm
                 return false;
             }
 
-            if (learningMetadata.LastNFitnesses.Count >= DeltaNoChangeMaxEpochs * 2)
+            if (learningMetadata.LastNFitnesses.Count >= DeltaNoChangeMaxEpochs + 1)
             {
                 if (CalculateDeltaChange(learningMetadata.LastNFitnesses) <= double.Epsilon)
                     return false;
