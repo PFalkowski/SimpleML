@@ -12,8 +12,8 @@
     <Title>SimpleML.GeneticAlgorithm</Title>
     <Company>Piotr Falkowski</Company>
     <Product>SimpleML</Product>
-    <Version>3.2.0</Version>
-    <PackageReleaseNotes>Minor display changes.</PackageReleaseNotes>
+    <Version>4.0.0</Version>
+    <PackageReleaseNotes>Improved conditions in best fit calculation. Config changes of default values. Add MaxEpochs configurable form IStopFunction. Fix not randomized new organism genes added to populations. Fix incorrect number of epochs to wait when no delta change. </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
