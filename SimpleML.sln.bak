@@ -21,11 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.NeuralNetwork.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.Configuration", "SimpleML.Configuration\SimpleML.Configuration.csproj", "{679394A9-1735-4CA3-9C2A-DEE6106D3E79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.NeuralNetworks", "SimpleML.NeuralNetworks\SimpleML.NeuralNetworks.csproj", "{92B37BB3-7677-46BC-994A-121722016226}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.NeuralNetworks", "SimpleML.NeuralNetworks\SimpleML.NeuralNetworks.csproj", "{92B37BB3-7677-46BC-994A-121722016226}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.FourierSeries.TestHarness", "SimpleML.FourierSeries.TestHarness\SimpleML.FourierSeries.TestHarness.csproj", "{F653CBC0-512D-48A6-8214-E36F04CE9211}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.FourierSeries", "SimpleML.FourierSeries\SimpleML.FourierSeries.csproj", "{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.FourierSeries.TestHarness", "SimpleML.FourierSeries\SimpleML.FourierSeries.TestHarness.csproj", "{F653CBC0-512D-48A6-8214-E36F04CE9211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,18 +167,6 @@ Global
 		{F653CBC0-512D-48A6-8214-E36F04CE9211}.Release|x64.Build.0 = Release|Any CPU
 		{F653CBC0-512D-48A6-8214-E36F04CE9211}.Release|x86.ActiveCfg = Release|Any CPU
 		{F653CBC0-512D-48A6-8214-E36F04CE9211}.Release|x86.Build.0 = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|x64.Build.0 = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Debug|x86.Build.0 = Debug|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|x64.ActiveCfg = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|x64.Build.0 = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|x86.ActiveCfg = Release|Any CPU
-		{6AB79CFC-ACA7-44B9-8D13-90D2685843EA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
