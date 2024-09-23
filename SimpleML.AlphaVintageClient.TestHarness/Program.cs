@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using SimpleML.AlphaVintageClient;
+﻿using SimpleML.AlphaVintageClient;
 using SimpleML.Configuration;
 using SimpleML.MonteCarlo;
 

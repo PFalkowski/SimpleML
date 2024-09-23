@@ -9,17 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.GeneticAlgorithm.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.PolynomialRegression.TestHarness", "SimpleML.PolynomialRegression.TestHarness\SimpleML.PolynomialRegression.TestHarness.csproj", "{986B0D55-A8A0-41C1-98B4-FFEBE36D2ACD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.MonteCarlo.TestHarness", "SimpleML.MonteCarlo.TestHarness\SimpleML.MonteCarlo.TestHarness.csproj", "{79B96B47-6A96-4370-A893-B72320555789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.MonteCarlo.TestHarness", "SimpleML.MonteCarlo.TestHarness\SimpleML.MonteCarlo.TestHarness.csproj", "{79B96B47-6A96-4370-A893-B72320555789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.MonteCarlo", "SimpleML.MonteCarlo\SimpleML.MonteCarlo.csproj", "{D5914CDE-89AA-4C58-8BEC-D990207BC15A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.MonteCarlo", "SimpleML.MonteCarlo\SimpleML.MonteCarlo.csproj", "{D5914CDE-89AA-4C58-8BEC-D990207BC15A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.AlphaVintageClient", "SimpleML.AlphaVintageClient\SimpleML.AlphaVintageClient.csproj", "{9D814226-5E99-47EB-A2D2-E202D15CE9F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.AlphaVintageClient", "SimpleML.AlphaVintageClient\SimpleML.AlphaVintageClient.csproj", "{9D814226-5E99-47EB-A2D2-E202D15CE9F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.AlphaVintageClient.TestHarness", "SimpleML.AlphaVintageClient.TestHarness\SimpleML.AlphaVintageClient.TestHarness.csproj", "{A9748260-35EC-49BD-BDEB-0AED529A4D57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.AlphaVintageClient.TestHarness", "SimpleML.AlphaVintageClient.TestHarness\SimpleML.AlphaVintageClient.TestHarness.csproj", "{A9748260-35EC-49BD-BDEB-0AED529A4D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.NeuralNetwork.TestHarness", "SimpleML.NeuralNetwork.TestHarness\SimpleML.NeuralNetwork.TestHarness.csproj", "{B82D2CBA-8957-4D02-A3CF-23731FF10254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.NeuralNetwork.TestHarness", "SimpleML.NeuralNetwork.TestHarness\SimpleML.NeuralNetwork.TestHarness.csproj", "{B82D2CBA-8957-4D02-A3CF-23731FF10254}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.Configuration", "SimpleML.Configuration\SimpleML.Configuration.csproj", "{679394A9-1735-4CA3-9C2A-DEE6106D3E79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleML.Configuration", "SimpleML.Configuration\SimpleML.Configuration.csproj", "{679394A9-1735-4CA3-9C2A-DEE6106D3E79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleML.NeuralNetworks", "SimpleML.NeuralNetworks\SimpleML.NeuralNetworks.csproj", "{92B37BB3-7677-46BC-994A-121722016226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +141,18 @@ Global
 		{679394A9-1735-4CA3-9C2A-DEE6106D3E79}.Release|x64.Build.0 = Release|Any CPU
 		{679394A9-1735-4CA3-9C2A-DEE6106D3E79}.Release|x86.ActiveCfg = Release|Any CPU
 		{679394A9-1735-4CA3-9C2A-DEE6106D3E79}.Release|x86.Build.0 = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|x64.Build.0 = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Debug|x86.Build.0 = Debug|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|x64.ActiveCfg = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|x64.Build.0 = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|x86.ActiveCfg = Release|Any CPU
+		{92B37BB3-7677-46BC-994A-121722016226}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
