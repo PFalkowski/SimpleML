@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SimpleML.AlphaVintageClient;
+using SimpleML.Configuration;
 using SimpleML.MonteCarlo;
 
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.development.json", optional: true, reloadOnChange: true)
-    .Build();
+var configuration = new ConfigurationFactory().GetConfiguration();
 
 string apiKey = configuration["ApiSettings:AlphaVantageApiKey"];
 var stockDataProvider = new StockDataProvider(configuration);
