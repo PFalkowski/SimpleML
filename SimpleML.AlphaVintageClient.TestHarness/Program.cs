@@ -9,11 +9,12 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 string apiKey = configuration["ApiSettings:AlphaVantageApiKey"];
-var stockDataFetcher = new StockDataFetcher(apiKey);
+var stockDataProvider = new StockDataProvider(configuration);
+
 var approximator = new MonteCarloApproximator();
 
 // Fetch Microsoft stock data
-var stockData = await stockDataFetcher.FetchStockDataAsync("MSFT", 1000);
+var stockData = await stockDataProvider.GetData();
 // Split data into training and testing sets (80% training, 20% testing)
 var splitIndex = (int)(stockData.Count * 0.8);
 var trainingData = stockData.Take(splitIndex).ToList();
