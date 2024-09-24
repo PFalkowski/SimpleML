@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace SimpleML.AlphaVintageClient
 {
-    public class StockDataProvider
+    public class StockDataProvider : IStockDataProvider
     {
         private readonly IConfiguration _configuration;
         private readonly string _filePath;

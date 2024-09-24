@@ -2,7 +2,7 @@
 
 namespace SimpleML.Configuration
 {
-    public class ConfigurationFactory
+    public class ConfigurationFactory : IConfigurationFactory
     {
         public IConfiguration GetConfiguration()
         {

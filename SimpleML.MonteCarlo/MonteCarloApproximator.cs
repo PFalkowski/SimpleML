@@ -1,6 +1,6 @@
 ﻿namespace SimpleML.MonteCarlo;
 
-public class MonteCarloApproximator(int seed = 0)
+public class MonteCarloApproximator(int seed = 0) : IMonteCarloApproximator
 {
     private readonly List<(double X, double Y)> _samples = [];
     private readonly Random _random = new(seed);

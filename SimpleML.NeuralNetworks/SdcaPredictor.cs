@@ -4,7 +4,7 @@ using SimpleML.NeuralNetworks.Models;
 
 namespace SimpleML.NeuralNetworks;
 
-public class SdcaPredictor
+public class SdcaPredictor : ISdcaPredictor
 {
     private MLContext _mlContext;
     private ITransformer _model;

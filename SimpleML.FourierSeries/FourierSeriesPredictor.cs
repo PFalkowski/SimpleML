@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MathNet.Numerics.IntegralTransforms;
 using System.Numerics;
-using MathNet.Numerics.IntegralTransforms;
 
 namespace SimpleML.FourierSeries;
 
-public class FourierSeriesPredictor
+public class FourierSeriesPredictor(int numCoefficients)
 {
     private List<Complex> _fourierCoefficients;
-    private int _numCoefficients;
     private double _meanPrice;
-
-    public FourierSeriesPredictor(int numCoefficients)
-    {
-        _numCoefficients = numCoefficients;
-    }
 
     public void Fit(List<double> prices)
     {
@@ -33,7 +24,7 @@ public class FourierSeriesPredictor
         Fourier.Forward(paddedPrices, FourierOptions.Default);
 
         // Store the most significant coefficients
-        _fourierCoefficients = paddedPrices.Take(_numCoefficients).ToList();
+        _fourierCoefficients = paddedPrices.Take(numCoefficients).ToList();
     }
 
     public List<double> Predict(int numDays)
@@ -44,7 +35,7 @@ public class FourierSeriesPredictor
         for (var day = 0; day < numDays; day++)
         {
             var sum = new Complex(0, 0);
-            for (var k = 0; k < _numCoefficients; k++)
+            for (var k = 0; k < numCoefficients; k++)
             {
                 var angle = 2 * Math.PI * k * (originalLength + day) / originalLength;
                 var exponential = new Complex(Math.Cos(angle), Math.Sin(angle));

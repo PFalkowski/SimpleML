@@ -3,20 +3,13 @@ using Newtonsoft.Json.Linq;
 
 namespace SimpleML.AlphaVintageClient;
 
-public class StockDataFetcher
+public class StockDataFetcher(string apiKey) : IStockDataFetcher
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _apiKey;
-
-    public StockDataFetcher(string apiKey)
-    {
-        _httpClient = new HttpClient();
-        _apiKey = apiKey;
-    }
+    private readonly HttpClient _httpClient = new();
 
     public async Task<List<StockData>> FetchStockDataAsync(string symbol, int limit = 1000)
     {
-        string url = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={_apiKey}&outputsize=full";
+        string url = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={apiKey}&outputsize=full";
         var response = await _httpClient.GetStringAsync(url);
         var jobject = JObject.Parse(response);
 
