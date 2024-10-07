@@ -25,7 +25,7 @@ namespace SimpleML.GeneticAlgorithm
         public IStopFunction StopFunction { get; set; } = new BasicStopFunction();
         public ISelectionAlgorithm FittestSelectionAlgorithm { get; set; }
         public IFitnessFunction FitnessFunction { get; protected set; }
-        public ILogger Logger { get; protected set; } = new ConsoleLogger();
+        public ILoggerLite Logger { get; protected set; } = new ConsoleLogger();
         public FileInfo ContinueFile { get; set; }
         public int MaxDegreeOfParallelism => Math.Min(PopulationSize, 500);
     }

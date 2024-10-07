@@ -12,7 +12,7 @@ namespace SimpleML.GeneticAlgorithm
         public GeneticAlgorithmSettings Settings { get; protected set; }
         public IStopFunction StopFunction { get; protected set; }
         public RunMetadata RunInfo { get; protected set; } = new RunMetadata();
-        public ILogger Logger { get; protected set; }
+        public ILoggerLite Logger { get; protected set; }
 
         public GeneticAlgorithm(GeneticAlgorithmSettings settings)
         {
