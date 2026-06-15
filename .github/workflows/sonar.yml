@@ -34,9 +34,9 @@ jobs:
           dotnet sonarscanner begin \
             /k:"PFalkowski_SimpleML" \
             /o:"pfalkowski" \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.token="$SONAR_TOKEN" \
             /d:sonar.host.url="https://sonarcloud.io"
       - name: Build
         run: dotnet build SimpleML.GeneticAlgorithm/SimpleML.GeneticAlgorithm.csproj --no-incremental
       - name: SonarCloud end
-        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
