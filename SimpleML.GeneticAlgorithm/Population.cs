@@ -11,8 +11,8 @@ namespace SimpleML.GeneticAlgorithm
         private readonly object _syncRoot = new object();
 
         public Random Rng { get; protected set; }
-        public List<Genotype> GenePool { get; protected set; }
-        public Genotype BestFit { get; protected set; }
+        public List<Genotype> GenePool { get; protected set; } = null!;
+        public Genotype? BestFit { get; protected set; }
         public IFitnessFunction FitnessFunction { get; protected set; }
         public ISelectionAlgorithm FittestSelectionAlgorithm { get; protected set; }
         public GeneticAlgorithmSettings Settings { get; protected set; }
