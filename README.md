@@ -1,4 +1,4 @@
-# SimpleML.GeneticAlgorithm
+﻿# SimpleML.GeneticAlgorithm
 
 [![CI](https://github.com/PFalkowski/SimpleML/actions/workflows/ci.yml/badge.svg)](https://github.com/PFalkowski/SimpleML/actions/workflows/ci.yml)
 [![NuGet version](https://img.shields.io/nuget/v/SimpleML.GeneticAlgorithm.svg)](https://www.nuget.org/packages/SimpleML.GeneticAlgorithm/)
@@ -8,6 +8,12 @@
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow.svg)](https://www.buymeacoffee.com/piotrfalkowski)
 
 A simple, extensible Genetic Algorithm implementation for .NET 8.
+
+## Install
+
+```bash
+dotnet add package SimpleML.GeneticAlgorithm
+```
 
 ## Usage
 
