@@ -30,6 +30,8 @@ jobs:
       - name: Install dotnet-sonarscanner
         run: dotnet tool install --global dotnet-sonarscanner
       - name: SonarCloud begin
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           dotnet sonarscanner begin \
             /k:"PFalkowski_SimpleML" \
@@ -39,4 +41,6 @@ jobs:
       - name: Build
         run: dotnet build SimpleML.GeneticAlgorithm/SimpleML.GeneticAlgorithm.csproj --no-incremental
       - name: SonarCloud end
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
