@@ -7,8 +7,8 @@ namespace SimpleML.GeneticAlgorithm
     {
         public ulong Epochs { get; set; }
         public ulong SimulationsCount { get; set; }
-        public Genotype CurrentEpochBest { get; set; }
-        public Genotype BestOverall { get; set; }
+        public Genotype? CurrentEpochBest { get; set; }
+        public Genotype? BestOverall { get; set; }
         public double CurrentFitness => CurrentEpochBest?.Fitness ?? 0;
         public double BestFitnessSoFar => BestOverall?.Fitness ?? 0;
         public DateTime StartTime { get; set; }

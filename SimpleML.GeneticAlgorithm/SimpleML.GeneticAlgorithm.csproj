@@ -2,26 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <Authors>Piotr Falkowski</Authors>
     <Description>Simple Genetic Algorithm implementation</Description>
-    <Copyright>Piotr Falkowski © 2023</Copyright>
+    <Copyright>Piotr Falkowski © 2026</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/PFalkowski/SimpleML</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/SimpleML</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Title>SimpleML.GeneticAlgorithm</Title>
-    <Company>Piotr Falkowski</Company>
-    <Product>SimpleML</Product>
-    <Version>4.0.0</Version>
-    <PackageReleaseNotes>Improved conditions in best fit calculation. Config changes of default values. Add MaxEpochs configurable form IStopFunction. Fix not randomized new organism genes added to populations. Fix incorrect number of epochs to wait when no delta change. </PackageReleaseNotes>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <Version>4.1.0</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LoggerLite" Version="4.0.0" />
+    <PackageReference Include="LoggerLite" Version="5.0.0" />
     <PackageReference Include="StrongRandom" Version="2.0.0" />
-    <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
